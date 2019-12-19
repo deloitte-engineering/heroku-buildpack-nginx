@@ -26,4 +26,18 @@ if [[ ! -f $1/config/nginx.conf.erb ]]; then
 else
 	echo '-----> nginx-buildpack: Custom config found in app/config.'
 fi
+
+if [[ ! -f $1/config/naxsi_core.rules ]]; then
+	cp config/naxsi_core.rules "$1/config/"
+	echo '-----> nginx-buildpack: Default NAXSI core rules copied to app/config.'
+else
+	echo '-----> nginx-buildpack: Custom NAXSI core rules found in app/config.'
+fi
+
+if [[ ! -f $1/config/naxsi.rules ]]; then
+	cp config/naxsi.rules "$1/config/"
+	echo '-----> nginx-buildpack: Default NAXSI rules copied to app/config.'
+else
+	echo '-----> nginx-buildpack: Custom NAXSI rules found in app/config.'
+fi
 exit 0
