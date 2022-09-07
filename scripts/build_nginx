@@ -9,18 +9,19 @@
 # Once the dyno has is 'up' you can open your browser and navigate
 # this dyno's directory structure to download the nginx binary.
 
-NGINX_VERSION=${NGINX_VERSION-1.17.6}
+NGINX_VERSION=${NGINX_VERSION-1.22.0}
+NAXSI_VERSION=${NAXSI_VERSION-1.2}
 PCRE_VERSION=${PCRE_VERSION-8.43}
-HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.33}
-ZLIB_VERSION=${ZLIB_VERSION-1.2.11}
+HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.34}
+ZLIB_VERSION=${ZLIB_VERSION-1.2.12}
 UUID4_VERSION=${UUID4_VERSION-master}
 
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-pcre_tarball_url=http://iweb.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
+pcre_tarball_url=http://downloads.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
 headers_more_nginx_module_url=https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
 uuid4_url=https://github.com/cybozu/nginx-uuid4-module/archive/${UUID4_VERSION}.tar.gz
 zlib_url=http://zlib.net/zlib-${ZLIB_VERSION}.tar.gz
-naxsi_url=https://github.com/nbs-system/naxsi/archive/0.56.tar.gz
+naxsi_url=https://github.com/nbs-system/naxsi/archive/${NAXSI_VERSION}.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
@@ -55,9 +56,9 @@ echo "Downloading $naxsi_url"
     --with-http_ssl_module \
     --with-http_auth_request_module \
     --prefix=/tmp/nginx \
-    --add-module=${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
-    --add-module=${temp_dir}/nginx-${NGINX_VERSION}/nginx-uuid4-module-${UUID4_VERSION} \
-    --add-module=${temp_dir}/nginx-${NGINX_VERSION}/naxsi-0.56/naxsi_src/ \
+    --add-dynamic-module=${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
+    --add-dynamic-module=${temp_dir}/nginx-${NGINX_VERSION}/nginx-uuid4-module-${UUID4_VERSION} \
+    --add-dynamic-module=${temp_dir}/nginx-${NGINX_VERSION}/naxsi-${NAXSI_VERSION}/naxsi_src/ \
     --without-mail_imap_module \
     --without-mail_pop3_module \
     --without-mail_smtp_module
